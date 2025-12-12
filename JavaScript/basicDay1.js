@@ -8,11 +8,18 @@
  function MakeTea(text){
         return text;
  }
-
  function CreateTea(MakeTea,name){
      return `${name} make a great ${MakeTea("Tea")}`
  }
 
-
  let res=CreateTea(MakeTea,"Rajat");
+ 
  console.log(res);
+
+ //Nested Function
+
+ function func(name){
+    return function func1(type){
+        return 
+    }
+ }
