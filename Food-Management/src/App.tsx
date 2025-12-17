@@ -1,13 +1,16 @@
 
 import './App.css'
 import ApiRoutes from './routes/ApiRoutes'
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
 
   return (
   <>
-        <ApiRoutes />
-  </>
+      <BrowserRouter>
+          <ApiRoutes />
+      </BrowserRouter>
+        </>
   
      
   )

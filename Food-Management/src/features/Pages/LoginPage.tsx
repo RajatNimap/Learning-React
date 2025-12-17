@@ -1,14 +1,20 @@
-import { Button, Box, Typography, Paper, TextField, Alert } from "@mui/material"
+import { Button, Box, Typography, Paper, TextField, Alert, CircularProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import type { AlertColor } from "@mui/material";
-import {login} from "../../services/AuthService";
+import {login} from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+// import CircularProgress from '@mui/material/CircularProgress';
+
+
 
 function LoginPage() {
+    const navigate=useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [sign, setsign] = useState<AlertColor>("success");
     const [open, setOpen] = useState(false);
+    const [loading,setloading] = useState(false);
 
 
     useEffect(() => {
@@ -20,9 +26,10 @@ function LoginPage() {
     }, [open, setsign])
 
 const HandleSubmit = async (
-  e: React.MouseEvent<HTMLButtonElement>
+  e:React.MouseEvent<HTMLButtonElement>
 ) => {       
      e.preventDefault();
+
         if (!email || !password) {
             setsign("error")
             setError("Email and Password is Required");
@@ -37,27 +44,27 @@ const HandleSubmit = async (
             return;
         }
         try{
-
-                 const result =await login({
-                email,
-                password
-        })
-        localStorage.setItem("accessToken", result.accessToken);
-         localStorage.setItem("refreshToken", result.refreshToken);
-         console.log(result.accessToken,result.refreshToken);
-
-        }catch(err:any){
-            setsign("error");
-            setError(err.response?.data?.message || "Login failed");
-            setOpen(true);
-        }
-       
-         
-
+        setloading(true); 
+        const result =await login({email,password})
+        console.log(result);
         // setsign("success")
         // setError("succesfully login ");
         // setOpen(true);
-        // return
+        localStorage.setItem("accessToken", result.accessToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
+        console.log(result.accessToken,result.refreshToken);
+        navigate("/");
+
+        }catch(err:any){
+            console.log(err);
+            setsign("error");
+            setError(err || "Login failed");
+            setOpen(true);
+        }finally{
+             setloading(false); 
+        }
+
+        
     }
     return (
         <>
@@ -91,11 +98,15 @@ const HandleSubmit = async (
                         margin="normal"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button variant="contained" onClick={HandleSubmit}>Login</Button>
+
+                    <Button variant="contained"  sx={{width:'120px'}} onClick={HandleSubmit}>
+                        {loading ?   
+                        <CircularProgress color="inherit" size={20} />:"Login"}
+                    </Button>
+
                 </Paper>
             </Box>
         </>
     )
-
 }
 export default LoginPage

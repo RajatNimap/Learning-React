@@ -9,9 +9,9 @@ function PublicNavbar(){
         <Box sx={{flexGrow:1}}>
             <AppBar>
                 <Toolbar>
-                    <IconButton sx ={{mr:2}} onClick={()=>navigate("/")}> 
+                    {/* <IconButton sx ={{mr:2}} onClick={()=>navigate("/")}> 
                         <HomeIcon  />
-                    </IconButton>
+                    </IconButton> */}
                     <Typography  variant="h6" >
                         Food Management App    
                     </Typography>

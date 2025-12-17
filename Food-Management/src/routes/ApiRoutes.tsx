@@ -1,23 +1,35 @@
-import { BrowserRouter as Router ,Routes,Route, Link } from "react-router-dom";
+import { BrowserRouter as Router ,Routes,Route, Link,useLocation } from "react-router-dom";
 import HomePage from  "../features/Pages/HomePages"
 import LoginPage from "../features/Pages/LoginPage"
 import PublicLayout from "../Layouts/PublicLayout"
+import AdminLayout from "../Layouts/AdminLayout";
+import { useEffect, useState } from "react";
 
 function ApiRoutes(){
-  const isLoggedIn =false;
+  const [IsLoggedIn,setIsLoggedIn] =useState(false);
+      const location = useLocation();
+
+        useEffect(()=>{
+          let accessToken = localStorage.getItem("accessToken");
+          let refreshToken = localStorage.getItem("refreshToken");
+          console.log(accessToken,refreshToken);
+          if(accessToken !=null && refreshToken !=null){
+            setIsLoggedIn(true);
+          }
+        },[location.pathname])
     return(
         <>      
-       <Router>
+      
       <Routes>
-
+        
         <Route path="/" element={
-          isLoggedIn ? (
-            <PublicLayout>
+          IsLoggedIn ? (
+            <AdminLayout>
                 <HomePage />
-            </PublicLayout>
+            </AdminLayout>
            ) :(
-            <PublicLayout>
-                <HomePage />
+             <PublicLayout>
+              <LoginPage />
             </PublicLayout>
           )
           }  />
@@ -29,7 +41,7 @@ function ApiRoutes(){
           } 
         />
       </Routes>
-    </Router>
+    
       </>
   
     )
