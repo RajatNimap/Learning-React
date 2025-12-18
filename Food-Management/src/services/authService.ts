@@ -1,6 +1,7 @@
 import api from "./axios"
 import axios from "axios"
 
+
 export interface LoginRequest {
     email: string,
     password: string
@@ -18,14 +19,23 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
         console.log(response);
         return response.data;
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            if (error.response) {
-                console.log(error.response.data);
-                throw error.response.data;
-            }
+        if (axios.isAxiosError(error) && error.response) {
+            throw error.response.data; 
         }
-        throw new Error("Network Server error");
+        throw new Error("Server error");
     }
+}
 
+export const getInventory =async(from:any,to:any):Promise<any>=>{
+        try {
+            const response =await api.get(`/Inventory?pnum=${from}&psize=${to}`);
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+            throw error.response.data; 
+            }
+            throw new Error("Server error");
+        }
 
 }

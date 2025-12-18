@@ -1,12 +1,10 @@
 import {Box,AppBar,Toolbar,Typography,Button,IconButton, Container, Grow} from "@mui/material"
 import HomeIcon from '@mui/icons-material/Home'
 import { useNavigate } from "react-router-dom"
-import { Label } from "@mui/icons-material";
 
 
 function AdminNavbar(){
     const navigate = useNavigate();
-    //const pages =["Inventory","Menu","Recipe","User","Order","Profile"]
     const pages = [ 
 
         {label: "Inventory",path :"/inventory"},
@@ -19,6 +17,7 @@ function AdminNavbar(){
     const HandleLogout=()=>{
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
+            
             navigate("/login");
     }
     return(

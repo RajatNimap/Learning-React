@@ -70,10 +70,12 @@ const HandleSubmit = async (
         <>
             <Box
                 sx={{
-                    height: "100vh",
+                    height: "calc(100vh - 10px)",
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    mr:"32%"
+                   
                 }}
             >
                 <Paper elevation={3} sx={{ padding: 4, width: 350 }}>
