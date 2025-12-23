@@ -17,15 +17,14 @@ function AdminNavbar(){
     const HandleLogout=()=>{
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
-            
             navigate("/login");
     }
     return(
         <>
         <AppBar>
             <Toolbar>
-                <IconButton>
-                    <HomeIcon/>
+                <IconButton onClick={()=>{navigate("/")}}>
+                    <HomeIcon />
                 </IconButton>
                     
                  {pages.map((page)=>(
